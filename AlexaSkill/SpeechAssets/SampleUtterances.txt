@@ -1,0 +1,36 @@
+﻿BurnIntent to burn
+BurnIntent to {BurnType} burn
+BurnIntent dish out a burn
+BurnIntent dish out a {BurnType} burn
+BurnIntent give a burn
+BurnIntent give a {BurnType} burn
+BurnIntent give {Name} a burn
+BurnIntent give {Name} a {BurnType} burn
+BurnIntent for a burn
+BurnIntent for a {BurnType} burn
+
+BurnIntent to burn {Name}
+BurnIntent to {BurnType} burn {Name}
+BurnIntent dish out a burn on {Name}
+BurnIntent dish out a {BurnType} burn on {Name}
+BurnIntent give a burn on {Name}
+BurnIntent give a {BurnType} burn on {Name}
+BurnIntent for a burn on {Name}
+BurnIntent for a {BurnType} burn on {Name}
+
+
+
+NewCoursesIntent what are todays new releases
+NewCoursesIntent todays new releases
+NewCoursesIntent latest courses
+NewCoursesIntent new courses
+
+TopCoursesIntent popular
+TopCoursesIntent popular courses
+TopCoursesIntent top courses
+TopCoursesIntent top {Limit} courses
+TopCoursesIntent the top {Limit} courses
+
+AMAZON.HelpIntent assistance needed please
+AMAZON.HelpIntent assistance please
+AMAZON.HelpIntent i need assistance
