@@ -23,25 +23,8 @@ namespace AlexaSkill.Controllers
 
             skillName = "Jokester";
             cardTitle = "Welcome";
-
-            launchPhrase = "Welcome to Burn. To dish out a burn, say give me a burn";
-            //launchPhrase = "Welcome to Courses. What would you like to hear, the Top Courses or New Courses?";
-             
-            repromptPhrase = "Please say, ask for a burn, or stop, at any time to exit.";
-            //repromptPhrase = "Please pick one, Top Courses or New Courses";
-
-
-
-            //phrases.Add("Hello, you are most excellent today, as always Dear.");
-            //phrases.Add("Hi there. Remember, beach is love, beach is life. Beaches be beachin.");
-            //phrases.Add("Hey yo. Keep it 100 today.");
-            //msg = "Howdy, Peace is a lie, there is only passion. Through passion, I gain strength. Through strength, I gain power.";
-            //msg += " Through power, I gain victory. Through victory, my chains are broken. The Force shall free me.";
-            //phrases.Add(msg);
-
-            //Random randNum = new Random();
-            //int aRandomPos = randNum.Next(phrases.Count);
-            //responsePhrase = phrases[aRandomPos];            
+            launchPhrase = "Welcome to Burn. To dish out a burn, say give me a burn";             
+            repromptPhrase = "Please say, ask for a burn, or stop, at any time to exit.";           
         }
 
 
@@ -142,14 +125,6 @@ namespace AlexaSkill.Controllers
                     response = BurnIntentHandler(request);
                     response.Response.Card.Title = "Burn";
                     break;
-                case "NewCoursesIntent":
-                    response = NewCoursesIntentHandler(request);
-                    response.Response.Card.Title = "New Courses";
-                    break;
-                case "TopCoursesIntent":
-                    response = TopCoursesIntentHandler(request);
-                    response.Response.Card.Title = "Top Courses";
-                    break;
                 case "AMAZON.CancelIntent":
                 case "AMAZON.StopIntent":
                     response = CancelOrStopItentHandler(request);
@@ -224,56 +199,10 @@ namespace AlexaSkill.Controllers
             );
         }
 
-        private AlexaResponse NewCoursesIntentHandler(Request request)
-        {
-            int limit = 2;
-            var output = new StringBuilder("Here are the latest courses. ");
-
-            using (var db = new AlexaDbContext())
-            {
-                db.Courses.Take(limit).OrderByDescending(c => c.DateCreated).ToList()
-                    .ForEach(c => output.AppendFormat("{0} by {1}. ", c.Title, c.Author));
-            }
-
-            return new AlexaResponse(output.ToString());
-        }
-
-        private AlexaResponse TopCoursesIntentHandler(Request request)
-        {
-            int limit = 10;
-
-            if (request.SlotsList.Any())
-            {
-                int maxLimit = 10;
-                var limitValue = request.SlotsList.FirstOrDefault(s => s.Key == "Limit").Value;
-
-                // ensure limit slot is not empty, and that it is an actual number between 1 and maxLimit, else default.
-                if (!string.IsNullOrWhiteSpace(limitValue) && int.TryParse(limitValue, out limit) && !(limit >= 1  && limit <= maxLimit))
-                {
-                    limit = maxLimit;
-                }
-            }
-
-            var output = new StringBuilder();
-            output.AppendFormat("Here are the top {0} courses. ", limit);
-
-            using (var db = new AlexaDbContext())
-            {
-                db.Courses.Take(limit).OrderByDescending(c => c.Votes).ToList()
-                    .ForEach(c => output.AppendFormat("{0} by {1}. ", c.Title, c.Author));
-            }
-
-            return new AlexaResponse(output.ToString());
-        }     
-
         private AlexaResponse SessionEndedRequestHandler(Request request)
         {
             return null;
         }
-
-
-
-
         private string ConstructBurnMessage(string name, string burn)
         {
             var message = !string.IsNullOrWhiteSpace(name) &&
@@ -284,7 +213,6 @@ namespace AlexaSkill.Controllers
 
             return message;
         }
-
 
         private string GetSlot(Request request, string key)
         {
@@ -314,7 +242,6 @@ namespace AlexaSkill.Controllers
             return interjections[randomPos];
         }
 
-
         private string PersonifyBurn(string burn)
         {
             var message = new StringBuilder();
@@ -325,6 +252,5 @@ namespace AlexaSkill.Controllers
             message.Append("</say-as></prosody></speak>");
             return message.ToString();
         }
-
     }
 }
