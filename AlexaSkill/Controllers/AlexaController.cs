@@ -143,10 +143,7 @@ namespace AlexaSkill.Controllers
 
         private AlexaResponse HelpIntentHandler(Request request)
         {
-            string msg;
-            msg = "To use this skill, you can say, Alexa, ask " + skillName + " for a burn";
-            //"the new courses. You can also say, Alexa, stop or Alexa, cancel, at any time to exit. For now, do you want to hear the Top Courses, or the New Courses?
-                        
+            var msg = "To use this skill, you can say, Alexa, ask " + skillName + " for a burn";                   
             var response = new AlexaResponse(msg, false);
             response.Response.Reprompt.OutputSpeech.Text = repromptPhrase;
             return response;
